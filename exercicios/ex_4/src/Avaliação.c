@@ -1,11 +1,9 @@
 #include <stdio.h>
 
 int main () {
-    float nota1, nota2, nota3, notag2, media, escolha, g1, gf, g2;
+    float nota1, nota2, nota3, notag2, media, escolha, g1, g2, gf;
     char disciplina[50];
-    int g1contador = 0;
     int g2contador = 0;
-    float gfcontador = 0;
 
     do {
         printf("Digite o nome da disciplina: ");
@@ -33,7 +31,7 @@ int main () {
 
         if (g2contador == 1) {
             g2 = (10 - media);
-            printf("A nota necessária na g2 para passar por gf é: %f\n", g2);
+            printf("A nota necessária na g2 para passar por gf é: %.2f\n", g2);
             printf("Digite a nota da G2: \n");
             scanf("%f", &notag2);
             gf = (g1 + notag2) / 2;
@@ -51,10 +49,8 @@ int main () {
         while (getchar() != '\n');
         escolha = getchar();
 
-        // Limpeza da entrada g1, g2, gf
-        g1contador = 0;
+        // Limpeza da entrada g2
         g2contador = 0;
-        gfcontador = 0;
 
     } while (escolha == 'Y' || escolha == 'y');
 
