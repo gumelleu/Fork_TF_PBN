@@ -18,7 +18,7 @@ int main()
     ptr = nome;
     ptr_ultimo = ptr + tamanho;
 
-    printf("O nome armazenado no vetor usndo ponteiros eh: %s\n", ptr);
+    printf("O nome armazenado no vetor usando ponteiros eh: %s\n", ptr);
     
     printf("O primeiro caractere do nome eh: %c\n", *ptr);
 
