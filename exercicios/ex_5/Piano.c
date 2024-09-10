@@ -29,7 +29,7 @@ int main()
                 freq = 587;  // Ré
                 break;
                 case 'd':
-                freq = 659;  // Mi
+                freq = 659;  // Mi  
                 break;
             case 'f':
                 freq = 698;  // Fá
