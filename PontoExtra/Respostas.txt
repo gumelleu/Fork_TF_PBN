@@ -1,0 +1,10 @@
+1.
+
+
+2. 
+imprime:
+a b c d 
+x y z w 
+
+//O que está sendo impresso é a troca dos elementos da primeira linha com a segunda linha da matriz original.
+
