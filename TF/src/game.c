@@ -1,44 +1,43 @@
-// game.c
-#include <stdio.h>
 #include "game.h"
-#include "graphics.h"
-#include "board.h"
-#include "player.h"
+#include <stdio.h>
 
-static Player player1, player2;
-static Player *currentPlayer;
-
-void game_init() {
-    board_init();
-    player_init(&player1, &player2);
-    currentPlayer = &player1;
+void game_init(Game* game) {
+    for (int i = 0; i < ROWS; ++i) {
+        for (int j = 0; j < COLUMNS; ++j) {
+            game->board[i][j] = EMPTY;
+        }
+    }
+    game->currentPlayer = PLAYER1;
 }
 
-void game_loop() {
-    bool running = true;
-    int col;
+void game_handle_input(Game* game, int x, int y) {
+    int column = x / 100; // Ajustar com base na largura do tabuleiro
+    if (column < 0 || column >= COLUMNS) return;
 
-    while (running) {
-        graphics_draw_board();
-
-        printf("Jogador %d, escolha uma coluna (0 a 6): ", currentPlayer->color);
-        scanf("%d", &col);
-
-        if (col < 0 || col >= COLS || !board_insert_piece(col, currentPlayer->color)) {
-            printf("Jogada inválida! Tente novamente.\n");
-            continue;
-        }
-
-        if (board_check_win(currentPlayer->color)) {
-            graphics_draw_board();
-            printf("Jogador %d venceu!\n", currentPlayer->color);
-            running = false;
-        } else {
-            currentPlayer = player_next_turn(currentPlayer);
+    for (int row = ROWS - 1; row >= 0; --row) {
+        if (game->board[row][column] == EMPTY) {
+            game->board[row][column] = game->currentPlayer;
+            game->currentPlayer = (game->currentPlayer == PLAYER1) ? PLAYER2 : PLAYER1;
+            break;
         }
     }
 }
 
-void game_cleanup() {
-    graphics_cleanup();
+void game_update(Game* game) {
+    // Atualizações do estado do jogo podem ser feitas aqui
+}
+
+void game_render(Game* game, SDL_Renderer* renderer, SDL_Texture* boardTexture, SDL_Texture* redTexture, SDL_Texture* yellowTexture) {
+    SDL_Rect boardRect = {50, 50, 700, 500}; // Ajustar dimensões
+    SDL_RenderCopy(renderer, boardTexture, NULL, &boardRect);
+
+    for (int i = 0; i < ROWS; ++i) {
+        for (int j = 0; j < COLUMNS; ++j) {
+            if (game->board[i][j] != EMPTY) {
+                SDL_Texture* pieceTexture = (game->board[i][j] == PLAYER1) ? redTexture : yellowTexture;
+                SDL_Rect pieceRect = {50 + j * 100, 50 + i * 100, 90, 90}; // Ajustar tamanhos
+                SDL_RenderCopy(renderer, pieceTexture, NULL, &pieceRect);
+            }
+        }
+    }
 }
