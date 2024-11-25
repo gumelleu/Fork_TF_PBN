@@ -2,7 +2,7 @@
 CC = gcc
 
 # Flags de compilação
-CFLAGS = -I/usr/local/include/SDL2 -D_THREAD_SAFE
+CFLAGS = -IRepos/PBN/TF/SDL2 -D_THREAD_SAFE
 LDFLAGS = -L/usr/local/lib -lSDL2 -lSDL2_image
 
 # Arquivos
@@ -14,12 +14,12 @@ TARGET = connect4
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(CC) -o $@ $^ $(LDFLAGS)
+    $(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
-	$(CC) -c $< $(CFLAGS)
+    $(CC) -c $< $(CFLAGS)
 
 clean:
-	rm -f $(OBJ) $(TARGET)
+    rm -f $(OBJ) $(TARGET)
 
 .PHONY: all clean
